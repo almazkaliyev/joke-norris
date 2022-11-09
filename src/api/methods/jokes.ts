@@ -3,6 +3,15 @@ import { Joke, JokeFromServer } from 'interfaces/jokes.interfaces'
 import { axios } from 'modules/axios'
 import { toCamelCase } from 'utils/toCamelCase'
 
+const getById = async (id: string) => {
+  const { data } = await axios.request<JokeFromServer>({
+    method: 'GET',
+    url: endpoints.jokes.getById(id),
+  })
+
+  return toCamelCase<Joke>(data)
+}
+
 const getRandom = async (category?: string) => {
   const { data } = await axios.request<JokeFromServer>({
     method: 'GET',
@@ -24,6 +33,7 @@ const search = async (query: string) => {
 }
 
 export const jokesApi = {
+  getById,
   getRandom,
   search,
 }
